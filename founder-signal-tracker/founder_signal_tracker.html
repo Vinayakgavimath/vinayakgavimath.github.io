@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Founder Signal Tracker | Vinayak Gavimath</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1f1f1f;
+      --text: #e8e8e8;
+      --muted: #555;
+      --green: #4ade80;
+      --green-dim: rgba(74, 222, 128, 0.08);
+      --green-border: rgba(74, 222, 128, 0.2);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-logo:hover { color: var(--text); }
+
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .hero {
+      padding: 160px 40px 80px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--green); }
+
+    .tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      border: 1px solid var(--green-border);
+      background: var(--green-dim);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 32px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em { font-style: italic; color: var(--green); }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+
+    .hero-meta { display: flex; gap: 40px; flex-wrap: wrap; }
+    .meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .meta-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .meta-value { font-size: 14px; color: var(--text); }
+
+    .stack-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 40px; }
+    .pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    p { color: #999; margin-bottom: 16px; font-weight: 300; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin: 48px 0;
+    }
+
+    .stat {
+      background: var(--bg);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-number {
+      font-size: 40px;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      color: var(--green);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .stat-label { font-size: 12px; color: var(--muted); }
+
+    .screenshot-wrap {
+      margin: 40px 0;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .screenshot-label {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .screenshot-wrap img { width: 100%; display: block; opacity: 0.9; }
+
+    .callout {
+      border-left: 2px solid var(--green);
+      padding: 20px 24px;
+      background: var(--green-dim);
+      margin: 32px 0;
+    }
+    .callout p { color: #ccc; margin: 0; font-size: 15px; }
+
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-block pre {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: #ccc;
+      line-height: 1.6;
+    }
+    .comment { color: var(--muted); font-style: italic; }
+    .key { color: var(--green); }
+    .val { color: #a5b4fc; }
+
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+      margin-top: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 32px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px; top: 8px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .timeline-item h4 { font-size: 14px; font-weight: 500; margin-bottom: 6px; color: var(--text); }
+    .timeline-item p { font-size: 14px; color: var(--muted); margin: 0; }
+
+    .output-card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 32px 0;
+    }
+    .output-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .output-body { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+    .output-row { display: flex; flex-direction: column; gap: 6px; }
+    .output-key {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      text-transform: uppercase;
+    }
+    .output-val { font-size: 14px; color: #ccc; line-height: 1.5; }
+
+    footer {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-left { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero > * { animation: fadeUp 0.5s ease forwards; opacity: 0; }
+    .hero > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero > *:nth-child(2) { animation-delay: 0.2s; }
+    .hero > *:nth-child(3) { animation-delay: 0.3s; }
+    .hero > *:nth-child(4) { animation-delay: 0.4s; }
+    .hero > *:nth-child(5) { animation-delay: 0.5s; }
+    .hero > *:nth-child(6) { animation-delay: 0.6s; }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 120px 20px 60px; }
+      section { padding: 60px 20px; }
+      footer { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">vinayak g.</a>
+    <div class="nav-links">
+      <a href="/">Work</a>
+      <a href="https://github.com/Vinayakgavimath">GitHub</a>
+      <a href="mailto:gavimathvinayak@gmail.com">Contact</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <a href="/" class="back-link">← Back to all projects</a>
+    <div class="tag">Case Study &mdash; GTM Engineering</div>
+    <h1>Founder Signal<br><em>Tracker</em></h1>
+    <p class="hero-sub">
+      Most cold outreach fails because it's generic. This system monitors what founders are saying on Twitter and generates signal-based outreach angles. Automatically. Every 6 hours.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Built in</span>
+        <span class="meta-value">1 day</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value" style="color: var(--green);">Live</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Runs</span>
+        <span class="meta-value">Every 6 hours</span>
+      </div>
+    </div>
+    <div class="stack-pills">
+      <span class="pill">Apify</span>
+      <span class="pill">n8n</span>
+      <span class="pill">Groq AI</span>
+      <span class="pill">Llama 3.1</span>
+      <span class="pill">Google Sheets</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">The Problem</div>
+    <h2>Personalized outreach needs real signal</h2>
+    <p>
+      A GTM engineer wants to send cold outreach that actually lands. To do that they need to know what the founder is thinking about right now. So they open Twitter, scroll through tweets, figure out what's interesting, then write an opening line based on that.
+    </p>
+    <p>
+      15 minutes per founder. 10 founders. 2.5 hours gone. Every week. Work that repeats forever and is completely automatable.
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">15m</span>
+        <span class="stat-label">Manual research per founder</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2.5h</span>
+        <span class="stat-label">Weekly for 10 founders</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">6h</span>
+        <span class="stat-label">Automated refresh cycle</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">$0</span>
+        <span class="stat-label">Monthly cost</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">How It Works</div>
+    <h2>Four nodes. End to end.</h2>
+    <p>Schedule Trigger fires every 6 hours. HTTP Request pulls latest tweets from Apify. AI Agent sends each tweet to Groq and extracts insight and outreach angle. Google Sheets logs everything.</p>
+
+    <div class="screenshot-wrap">
+      <div class="screenshot-label">
+        <span class="dot"></span>
+        n8n — Founder Signal Tracker workflow
+      </div>
+      <img src="Founders_GTM_n8n.webp" alt="n8n workflow canvas" />
+    </div>
+
+    <div class="output-card">
+      <div class="output-header">real output — Naval Ravikant</div>
+      <div class="output-body">
+        <div class="output-row">
+          <span class="output-key">Tweet</span>
+          <span class="output-val">"Software platforms are going to be rebuilt for agent-first."</span>
+        </div>
+        <div class="output-row">
+          <span class="output-key">Core Insight</span>
+          <span class="output-val">Naval believes traditional software architecture is being replaced by agent-centric design, shifting the entire stack.</span>
+        </div>
+        <div class="output-row">
+          <span class="output-key">Outreach Angle</span>
+          <span class="output-val">"I've been following the shift towards agent-centric platforms and think our approach aligns with where software is heading — would love to share what we're seeing."</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="screenshot-wrap">
+      <div class="screenshot-label">
+        <span class="dot"></span>
+        Google Sheets — live output
+      </div>
+      <img src="preview.webp" alt="Google Sheets with founder insights and outreach angles" />
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">The Hard Part</div>
+    <h2>Twitter blocked free API access halfway through.</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>Set up Twitter developer account</h4>
+        <p>Got the keys. Bearer token. Everything ready. Built the HTTP Request node in n8n.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Executed the first API call</h4>
+        <p>"Resource not found." Spent 30 minutes debugging auth, URL, headers. Everything was correct.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Found the real problem</h4>
+        <p>Twitter's free tier doesn't allow reading tweets. The endpoint requires Basic tier at $200/month.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Tried Nitter RSS</h4>
+        <p>Most public Nitter instances are dead. Twitter killed them all.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Switched to Apify</h4>
+        <p>$0.20 and 6 seconds later, 5 real tweets from Naval were flowing into n8n. Full pipeline working end to end.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>The detour is part of the build. Most people stop at "resource not found." Finding the workaround is the actual GTM engineering skill.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Prompt</div>
+    <h2>What I send to Groq</h2>
+    <p>The prompt extracts two things from every tweet: the core belief behind it, and a personalized cold email opening line that uses that belief as context without explicitly mentioning the tweet.</p>
+
+    <div class="code-block">
+      <pre><span class="comment">// Prompt sent to Groq AI Agent for each tweet</span>
+
+You are a GTM assistant. Analyze this tweet and return two things:
+
+<span class="key">1. Core Insight:</span> What is the main idea or belief this founder
+   is expressing in one sentence.
+
+<span class="key">2. Outreach Angle:</span> Write a personalized cold email opening line
+   (max 2 sentences) that references this specific tweet naturally.
+   Don't mention you saw their tweet. Just use the idea as context.
+
+<span class="key">Tweet:</span> <span class="val">{{ $json.text }}</span>
+<span class="key">Founder:</span> <span class="val">{{ $json.author.name }}</span></pre>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">What I Learned</div>
+    <h2>The AI can extract the insight. You still have to judge it.</h2>
+    <p>
+      A tweet about election security generates a completely different outreach angle than one about agent-first software. Groq handles the extraction correctly. But deciding whether that angle is worth acting on is still a human call.
+    </p>
+    <p>
+      That judgment is the GTM skill. The automation just removes the 15 minutes of manual work that came before it.
+    </p>
+    <div class="callout">
+      <p>Automation doesn't replace thinking. It clears the space so thinking is the only thing left to do.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-left">vinayak gavimath &mdash; 2026</div>
+    <div class="footer-links">
+      <a href="/">All projects</a>
+      <a href="https://github.com/Vinayakgavimath">GitHub</a>
+      <a href="mailto:gavimathvinayak@gmail.com">Email</a>
+    </div>
+  </footer>
+
+</body>
+</html>
