@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI GTM Research and Outreach Agent | Vinayak Gavimath</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1f1f1f;
+      --text: #e8e8e8;
+      --muted: #555;
+      --green: #4ade80;
+      --green-dim: rgba(74, 222, 128, 0.08);
+      --green-border: rgba(74, 222, 128, 0.2);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-logo:hover { color: var(--text); }
+
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .hero {
+      padding: 160px 40px 80px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--green); }
+
+    .tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      border: 1px solid var(--green-border);
+      background: var(--green-dim);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 32px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero h1 em { font-style: italic; color: var(--green); }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+
+    .hero-meta { display: flex; gap: 40px; flex-wrap: wrap; }
+    .meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .meta-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .meta-value { font-size: 14px; color: var(--text); }
+
+    .stack-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 40px; }
+    .pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    p { color: #999; margin-bottom: 16px; font-weight: 300; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin: 48px 0;
+    }
+
+    .stat {
+      background: var(--bg);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-number {
+      font-size: 40px;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      color: var(--green);
+      font-family: 'DM Mono', monospace;
+    }
+    .stat-label { font-size: 12px; color: var(--muted); }
+
+    .workflows {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    .workflow-item {
+      background: var(--bg);
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 24px;
+      align-items: start;
+      transition: background 0.2s;
+    }
+    .workflow-item:hover { background: var(--surface); }
+
+    .workflow-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--green);
+      padding-top: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .workflow-content h3 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .workflow-content p { font-size: 14px; margin-bottom: 12px; color: var(--muted); }
+
+    .workflow-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .workflow-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* Architecture diagram */
+    .arch {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 40px;
+      margin: 40px 0;
+    }
+
+    .arch-center {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .arch-hub {
+      display: inline-block;
+      border: 1px solid var(--green-border);
+      background: var(--green-dim);
+      padding: 12px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--green);
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .arch-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .arch-nodes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .arch-node {
+      background: var(--bg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .arch-node-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: 0.06em;
+    }
+
+    .arch-node-name {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .arch-node-detail {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .callout {
+      border-left: 2px solid var(--green);
+      padding: 20px 24px;
+      background: var(--green-dim);
+      margin: 32px 0;
+    }
+    .callout p { color: #ccc; margin: 0; font-size: 15px; }
+
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-block pre {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: #ccc;
+      line-height: 1.6;
+    }
+    .comment { color: var(--muted); font-style: italic; }
+    .key { color: var(--green); }
+    .val { color: #a5b4fc; }
+
+    .output-card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 32px 0;
+    }
+    .output-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .output-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .output-row { display: flex; flex-direction: column; gap: 4px; }
+    .output-key {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      text-transform: uppercase;
+    }
+    .output-val { font-size: 14px; color: #ccc; line-height: 1.5; }
+
+    footer {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-left { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero > * { animation: fadeUp 0.5s ease forwards; opacity: 0; }
+    .hero > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero > *:nth-child(2) { animation-delay: 0.2s; }
+    .hero > *:nth-child(3) { animation-delay: 0.3s; }
+    .hero > *:nth-child(4) { animation-delay: 0.4s; }
+    .hero > *:nth-child(5) { animation-delay: 0.5s; }
+    .hero > *:nth-child(6) { animation-delay: 0.6s; }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 120px 20px 60px; }
+      section { padding: 60px 20px; }
+      .workflow-item { grid-template-columns: 1fr; }
+      footer { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">vinayak g.</a>
+    <div class="nav-links">
+      <a href="/">Work</a>
+      <a href="https://github.com/Vinayakgavimath/ai-gtm-research-agent">GitHub</a>
+      <a href="mailto:gavimathvinayak@gmail.com">Contact</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <a href="/" class="back-link">← Back to all projects</a>
+    <div class="tag">Case Study &mdash; GTM Engineering</div>
+    <h1>AI GTM Research<br>and Outreach <em>Agent</em></h1>
+    <p class="hero-sub">
+      A fully automated sales pipeline. Takes a company name, researches it with AI, finds the founder email, sends personalized cold outreach, tracks replies, and follows up. Zero human input after setup.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Built in</span>
+        <span class="meta-value">2 days</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value" style="color: var(--green);">Live</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Workflows</span>
+        <span class="meta-value">5 automated</span>
+      </div>
+    </div>
+    <div class="stack-pills">
+      <span class="pill">n8n</span>
+      <span class="pill">Groq API</span>
+      <span class="pill">Llama 3.1</span>
+      <span class="pill">Gmail</span>
+      <span class="pill">Google Sheets</span>
+      <span class="pill">Warmup Inbox</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">The Problem</div>
+    <h2>Manual GTM does not scale</h2>
+    <p>Sales and GTM teams at early-stage startups waste hours manually researching companies, finding founder emails, and writing cold outreach. Work that repeats every single week.</p>
+    <p>Each step is slow, inconsistent, and completely automatable. I built a system to do all of it end to end, without a human in the loop.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">10</span>
+        <span class="stat-label">YC companies researched</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Cold emails sent</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">10/10</span>
+        <span class="stat-label">Deliverability score</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Automated workflows</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">What I Built</div>
+    <h2>Five workflows. One pipeline.</h2>
+    <p>Every workflow reads from or writes to one Google Sheet. Research, outreach, replies, follow-ups, and scores all in one place. No manual hand-offs.</p>
+
+    <div class="workflows">
+      <div class="workflow-item">
+        <span class="workflow-num">01</span>
+        <div class="workflow-content">
+          <h3>GTM Research Agent</h3>
+          <p>Takes a company name via webhook. Sends it to Groq AI (Llama 3.1 8B). Returns structured research: what they do, who the customer is, their pain point, a trigger event, and a personalized outreach angle. Appends everything to Google Sheets automatically.</p>
+          <div class="workflow-tags">
+            <span class="workflow-tag">Webhook</span>
+            <span class="workflow-tag">Groq AI</span>
+            <span class="workflow-tag">Sheets</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="workflow-item">
+        <span class="workflow-num">02</span>
+        <div class="workflow-content">
+          <h3>Outreach Sender</h3>
+          <p>Reads rows where status is "Not Sent". Sends a personalized cold email via Gmail using the research data. Updates status to "Sent" and logs the timestamp. Rate-limited to 5 emails per day to protect deliverability.</p>
+          <div class="workflow-tags">
+            <span class="workflow-tag">Sheets</span>
+            <span class="workflow-tag">Gmail</span>
+            <span class="workflow-tag">Rate Limiting</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="workflow-item">
+        <span class="workflow-num">03</span>
+        <div class="workflow-content">
+          <h3>Reply Tracker</h3>
+          <p>Checks inbox daily for replies from target founders. If a reply comes in, updates reply_status to "Replied" automatically. Runs every morning at 9am via schedule trigger.</p>
+          <div class="workflow-tags">
+            <span class="workflow-tag">Schedule</span>
+            <span class="workflow-tag">Gmail</span>
+            <span class="workflow-tag">Sheets</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="workflow-item">
+        <span class="workflow-num">04</span>
+        <div class="workflow-content">
+          <h3>Follow-up Sequence</h3>
+          <p>If no reply after 3 days, automatically sends a personalized follow-up using the original outreach angle. Updates status to "Follow-up Sent" so it never fires twice on the same lead.</p>
+          <div class="workflow-tags">
+            <span class="workflow-tag">Schedule</span>
+            <span class="workflow-tag">Sheets</span>
+            <span class="workflow-tag">Gmail</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="workflow-item">
+        <span class="workflow-num">05</span>
+        <div class="workflow-content">
+          <h3>Lead Scorer</h3>
+          <p>Sends each company's research data to Groq AI and gets back a score (1 to 10) and reasoning. Writes score and score_reason back to the sheet. Run manually to reprioritize outreach at any time.</p>
+          <div class="workflow-tags">
+            <span class="workflow-tag">Sheets</span>
+            <span class="workflow-tag">Groq AI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Architecture</div>
+    <h2>How it all connects</h2>
+    <p>One Google Sheet as the shared data layer. Every workflow reads from or writes to the same sheet.</p>
+
+    <div class="arch">
+      <div class="arch-center">
+        <div class="arch-hub">Google Sheets</div>
+        <div class="arch-sub">shared data layer</div>
+      </div>
+      <div class="arch-nodes">
+        <div class="arch-node">
+          <span class="arch-node-num">01</span>
+          <span class="arch-node-name">Research Agent</span>
+          <span class="arch-node-detail">Webhook + Groq + Sheet</span>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-num">02</span>
+          <span class="arch-node-name">Outreach Sender</span>
+          <span class="arch-node-detail">Sheet + Gmail + Sheet</span>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-num">03</span>
+          <span class="arch-node-name">Reply Tracker</span>
+          <span class="arch-node-detail">Gmail + Sheet</span>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-num">04</span>
+          <span class="arch-node-name">Follow-up</span>
+          <span class="arch-node-detail">Sheet + Gmail + Sheet</span>
+        </div>
+        <div class="arch-node">
+          <span class="arch-node-num">05</span>
+          <span class="arch-node-name">Lead Scorer</span>
+          <span class="arch-node-detail">Sheet + Groq + Sheet</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Real Output</div>
+    <h2>What the agent actually produces</h2>
+    <p>For each company name, Groq AI returns a structured JSON object with everything needed to send a personalized cold email.</p>
+
+    <div class="output-card">
+      <div class="output-header">sample output — B2B SaaS company</div>
+      <div class="output-body">
+        <div class="output-row">
+          <span class="output-key">Company</span>
+          <span class="output-val">Stripe</span>
+        </div>
+        <div class="output-row">
+          <span class="output-key">What they do</span>
+          <span class="output-val">Payment infrastructure for the internet. Helps businesses accept payments and manage revenue.</span>
+        </div>
+        <div class="output-row">
+          <span class="output-key">Trigger Event</span>
+          <span class="output-val">$600M round for expansion into Southeast Asia and Latin America.</span>
+        </div>
+        <div class="output-row">
+          <span class="output-key">Outreach Angle</span>
+          <span class="output-val">"With your e-commerce growth accelerating in LatAm, now is the perfect time to reassess payment processing fees before they eat your margins."</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">The Hard Part</div>
+    <h2>Prompt engineering in production</h2>
+    <p>The biggest bug: Groq kept returning nested JSON objects in the <code style="font-family: 'DM Mono', monospace; font-size: 13px; color: var(--green);">who</code> field instead of plain strings. My parser was breaking on every run.</p>
+
+    <div class="code-block">
+      <pre><span class="comment">// The fix: one line added to Groq API request body</span>
+<span class="key">"response_format"</span>: { <span class="key">"type"</span>: <span class="val">"json_object"</span> }
+
+<span class="comment">// Forces Groq to return valid JSON every time.
+// Combined with field-level instructions and few-shot
+// examples in the prompt, the parser has not broken since.</span></pre>
+    </div>
+
+    <div class="callout">
+      <p>Production-ready means it doesn't break on the 47th run. That took longer to get right than the entire workflow setup.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">What I Learned</div>
+    <h2>Automation forces systems thinking</h2>
+    <p>The hardest part was not the automation. It was data quality. Groq would hallucinate nested objects, return wrong companies, or generate generic outreach angles that would not survive contact with a real inbox.</p>
+    <p>Every bug taught me something about prompt engineering, data validation, and what production-ready actually means when real emails go to real founders.</p>
+    <div class="callout">
+      <p>Automation does not just save time. It forces you to think in systems, and systems expose every assumption you did not know you were making.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-left">vinayak gavimath &mdash; 2026</div>
+    <div class="footer-links">
+      <a href="/">All projects</a>
+      <a href="https://github.com/Vinayakgavimath/ai-gtm-research-agent">GitHub</a>
+      <a href="mailto:gavimathvinayak@gmail.com">Email</a>
+    </div>
+  </footer>
+
+</body>
+</html>
